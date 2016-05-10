@@ -4,6 +4,7 @@
 # Your config
 ################################################################################
 my_hostname              = "my-centos-env.dev"
+my_private_ip            = "10.10.10.10"
 my_timezone              = "UTC"
 my_private_key_path      = "./key/id_rsa"
 my_public_key_path       = "./key/id_rsa.pub"
@@ -35,7 +36,7 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: my_https_port,   host: 20443, id: "https"
   config.vm.network "forwarded_port", guest: my_mariadb_port, host: 23306, id: "mysql"
   config.vm.network "forwarded_port", guest: my_redis_port,   host: 26379, id: "redis"
-  config.vm.network "private_network", ip: "10.10.10.10"
+  config.vm.network "private_network", ip: my_private_ip
 
   config.vm.synced_folder ".", "/vagrant", id:"core"
   config.vm.synced_folder my_app_source_path, "/app/source"
