@@ -24,8 +24,19 @@ echo ">> Install common packages"
 sudo yum install -y -q wget curl tar openssl-devel gcc gcc-c++ make \
     zlib-devel pcre-devel gd-devel krb5-devel git
 
-echo ">> Fix SELinux"
-cd /vagrant/conf/selinux && \
-sudo semodule -i httpd_t.pp && \
-sudo semodule -e httpd_t && \
-cd /home/vagrant
+#echo ">> Fix SELinux"
+#cd /vagrant/conf/selinux && \
+#sudo semodule -i httpd_t.pp && \
+#sudo semodule -e httpd_t && \
+#cd /home/vagrant
+#sudo setsebool -P httpd_can_network_connect 1
+#sudo setsebool -P httpd_can_network_connect_db 1
+#sudo setsebool -P httpd_can_network_memcache 1
+#sudo setsebool -P httpd_anon_write 1
+#sudo setsebool -P httpd_sys_script_anon_write 1
+#sudo setsebool -P httpd_unified 1
+#sudo setsebool -P httpd_can_sendmail 1
+
+echo ">> Disable SELinux"
+sudo setenforce 0
+sudo sed -i '/^SELINUX/cSELINUX=disabled' /etc/sysconfig/selinux
