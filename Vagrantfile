@@ -11,12 +11,14 @@ my_public_key_path       = "./key/id_rsa.pub"
 my_app_source_path       = "../source"
 my_http_port             = 80
 my_https_port            = 443
+#my_http_user             = "nginx"
+#my_http_group            = "nginx"
 #my_https_enabled         = false
 
-#my_php_timezone          = "UTC"
+#my_php_timezone          = my_timezone
 #my_php_fpm_listen        = "127.0.0.1:9000"
-#my_php_fpm_user          = "nginx"
-#my_php_fpm_group         = "nginx"
+#my_php_fpm_user          = my_http_user
+#my_php_fpm_group         = my_http_group
 
 my_mariadb_root_password = "rootpass"
 my_mariadb_port          = 3306
@@ -38,8 +40,9 @@ Vagrant.configure(2) do |config|
   config.vm.network "forwarded_port", guest: my_redis_port,   host: 26379, id: "redis"
   config.vm.network "private_network", ip: my_private_ip
 
+  config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
   config.vm.synced_folder ".", "/vagrant", id:"core"
-  config.vm.synced_folder my_app_source_path, "/app/source"
+  config.vm.synced_folder my_app_source_path, "/app/source", mount_options: ["dmode=775,fmode=775"]
 
   # Using existed private key and do not generate a key
   config.ssh.insert_key = false
