@@ -39,4 +39,5 @@ sudo yum install -y -q wget curl tar openssl-devel gcc gcc-c++ make \
 
 echo ">> Disable SELinux"
 sudo setenforce 0
-sudo sed -i '/^SELINUX/cSELINUX=disabled' /etc/sysconfig/selinux
+sudo sed -i 's/SELINUX=\(enforcing\|permissive\)/SELINUX=disabled/g' /etc/sysconfig/selinux
+sudo sed -i 's/SELINUX=\(enforcing\|permissive\)/SELINUX=disabled/g' /etc/selinux/config
