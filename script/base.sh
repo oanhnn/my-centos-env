@@ -7,7 +7,7 @@ echo ">> Setting server timezone"
 
 echo ">> Prevent access with plaintext password"
 sudo sed -i -e "\\#PasswordAuthentication yes# s#PasswordAuthentication yes#PasswordAuthentication no#g" /etc/ssh/sshd_config
-sudo service sshd restart
+sudo systemctl restart sshd
 
 echo ">> Load customize bashrc"
 if [ -f /vagrant/conf/.bashrc ]
