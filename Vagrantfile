@@ -44,7 +44,7 @@ Vagrant.configure(2) do |config|
 
   config.vm.network "forwarded_port", guest: 22,                   host: 20022, id: "ssh"
   config.vm.network "forwarded_port", guest: my[:cf_http_port],    host: 20080, id: "http"
-  config.vm.network "forwarded_port", guest: my[:cf_https_port],   host: 20443, id: "https", disabled: my[:cf_basic_auth_enabled]
+  config.vm.network "forwarded_port", guest: my[:cf_https_port],   host: 20443, id: "https", disabled: my[:cf_https_enabled]
   config.vm.network "forwarded_port", guest: my[:cf_mariadb_port], host: 23306, id: "mysql"
   config.vm.network "forwarded_port", guest: my[:cf_redis_port],   host: 26379, id: "redis"
   config.vm.network "private_network", ip: my[:cf_private_ip]
