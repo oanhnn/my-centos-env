@@ -34,6 +34,11 @@ my = {
   :cf_redis_port            => 6379                ,
   :cf_redis_remote_access   => false               ,
   #:cf_redis_password        => false               ,
+  :cf_host_port_ssh         => 20022               ,
+  :cf_host_port_http        => 20080               ,
+  :cf_host_port_https       => 20443               ,
+  :cf_host_port_mariadb     => 23306               ,
+  :cf_host_port_redis       => 26379               ,
 }
 
 ################################################################################
@@ -42,11 +47,11 @@ Vagrant.configure(2) do |config|
   config.vm.box = "centos/7"
   config.vm.box_version = "=1603.01"
 
-  config.vm.network "forwarded_port", guest: 22,                   host: 20022, id: "ssh"
-  config.vm.network "forwarded_port", guest: my[:cf_http_port],    host: 20080, id: "http"
-  config.vm.network "forwarded_port", guest: my[:cf_https_port],   host: 20443, id: "https", disabled: my[:cf_https_enabled]
-  config.vm.network "forwarded_port", guest: my[:cf_mariadb_port], host: 23306, id: "mysql"
-  config.vm.network "forwarded_port", guest: my[:cf_redis_port],   host: 26379, id: "redis"
+  config.vm.network "forwarded_port", guest: 22,                   host: my[:cf_host_port_ssh], id: "ssh"
+  config.vm.network "forwarded_port", guest: my[:cf_http_port],    host: my[:cf_host_port_http], id: "http"
+  config.vm.network "forwarded_port", guest: my[:cf_https_port],   host: my[:cf_host_port_https], id: "https", disabled: my[:cf_https_enabled]
+  config.vm.network "forwarded_port", guest: my[:cf_mariadb_port], host: my[:cf_host_port_mariadb], id: "mysql"
+  config.vm.network "forwarded_port", guest: my[:cf_redis_port],   host: my[:cf_host_port_redis], id: "redis"
   config.vm.network "private_network", ip: my[:cf_private_ip]
 
   config.vm.synced_folder ".", "/home/vagrant/sync", disabled: true
