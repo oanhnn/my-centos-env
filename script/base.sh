@@ -15,6 +15,10 @@ then
   echo "source /vagrant/conf/.bashrc" >> /home/vagrant/.bashrc;
 fi
 
+echo ">> Install 'chmodr'"
+sudo cp -f /vagrant/conf/chmodr.sh /usr/bin/chmodr && \
+sudo chmod a+x /usr/bin/chmodr
+
 echo ">> Install EPEL and REMI repo"
 sudo yum -y -q install epel-release >/dev/null 2>&1
 sudo rpm -Uh http://rpms.famillecollet.com/enterprise/remi-release-7.rpm >/dev/null 2>&1
