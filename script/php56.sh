@@ -16,7 +16,7 @@ sudo sed -i "s/^listen\s*=.*/listen = $cf_php_fpm_listen/" /etc/php-fpm.d/www.co
 sudo sed -i "s/^user\s*=.*/user = $cf_php_fpm_user/" /etc/php-fpm.d/www.conf && \
 sudo sed -i "s/^group\s*=.*/group = $cf_php_fpm_group/" /etc/php-fpm.d/www.conf && \
 sudo sed -i "s/^listen.allowed_clients.*/listen.allowed_clients = 127.0.0.1/" /etc/php-fpm.d/www.conf && \
-sudo sed -i "s/^;catch_workers_output.*/atch_workers_output = yes/" /etc/php-fpm.d/www.conf && \
+sudo sed -i "s/^;catch_workers_output.*/catch_workers_output = yes/" /etc/php-fpm.d/www.conf && \
 sudo sed -i "s/^php_admin_flag\[log_errors\] = .*/;php_admin_flag[log_errors] =/" /etc/php-fpm.d/www.conf && \
 sudo sed -i "s/^php_admin_value\[error_log\] =.*/;php_admin_value[error_log] =/" /etc/php-fpm.d/www.conf && \
 echo "php_admin_value[display_errors] = 'stderr'" >> /etc/php-fpm.d/www.conf
