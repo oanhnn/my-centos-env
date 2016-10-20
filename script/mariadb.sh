@@ -1,32 +1,21 @@
-#!/usr/bin/bash
-# This script automatically installs and configures MariaDB 10.
-echo ">> Install and config MariaDB"
+#!/bin/bash
+echo ">> Install MariaDB"
 
 [[ -z "$cf_mariadb_root_password" ]] && { echo "!!! MariaDB root password not set. Check the Vagrant file."; exit 1; }
 
 # copy repo file
-if [ -f /etc/yum.repos.d/mariadb.repo ]
+if [[ ! -f /etc/yum.repos.d/mariadb.repo ]]
 then
-sudo cat > /etc/yum.repos.d/mariadb.repo <<'EOF'
-[mariadb]
-name = MariaDB
-baseurl = http://yum.mariadb.org/10.0/centos7-amd64
-gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
-gpgcheck=1
-EOF
+    sudo cp -f /vagrant/etc/yum.repos.d/mariadb.repo /etc/yum.repos.d/
+    sudo yum -y update
 fi
 
-# update
-sudo yum -y -q update >/dev/null 2>&1
+# Install MariaDB
+sudo yum -y install mariadb-server mariadb
 
-# install mariadb
-sudo yum -y -q install mariadb-server mariadb >/dev/null 2>&1
-
-# ensure it is running
-sudo systemctl start mariadb
-
-# set to auto start
-sudo systemctl enable mariadb
+# Start and enable mysql service
+sudo systemctl start mysql
+sudo systemctl enable mysql
 
 # set root password
 echo ">> Change MariaDB root password"
@@ -44,15 +33,21 @@ $MYSQL -u root -p$cf_mariadb_root_password -e "DROP USER ''@'$(hostname)';"
 # drop the demo database
 $MYSQL -u root -p$cf_mariadb_root_password -e "DROP DATABASE IF EXISTS test;"
 
-# TODO: change port for MariaDB
-#sudo sed -i "s/port.*/port = ${cf_mariadb_port}/" /etc/mysql/my.cnf
+# unset MYSQl variable
+unset MYSQL
+
+# TODO change port for MariaDB
+#echo ">> Change MariaDB access port to ${cf_mariadb_port}"
+#sudo sed -i "s/^port\s*=.*/port = ${cf_mariadb_port}/" /etc/my.cnf
 
 # setting the mysql bind-address to allow connections from everywhere
 if [[ $cf_mariadb_remote_access == true ]]
 then
   echo ">> Enable access MariaDB from remote"
-  sudo sed -i "s/bind-address.*/bind-address = 0.0.0.0/" /etc/mysql/my.cnf
+  sudo sed -i "s/bind-address\s*=.*/bind-address = 0.0.0.0/" /etc/my.cnf
+  sudo firewall-cmd --permanent --add-port=$cf_mariadb_port/tcp
+  sudo firewall-cmd --reload
 fi
 
 # restart
-sudo systemctl restart mariadb
+sudo systemctl restart mysql

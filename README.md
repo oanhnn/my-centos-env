@@ -7,11 +7,15 @@ Features
 
 - [x] Using [CentOS 7.2][boxversion]
 - [x] Auto install php-fpm v5.6
-- [x] Auto install NGINX v1.6
-- [x] Auto install MariaDB v5.5
+- [x] Auto install NGINX v1.10
+- [ ] Auto install Apache (httpd) v2.4
+- [x] Auto install MariaDB v10.0
+- [ ] Auto install PostgreSQL v9.5
 - [x] Auto install Redis v2.8
 - [x] Auto install NodeJS v4.x
-- [x] Config is editable
+- [ ] Auto install JDK v8
+- [x] May be customize configuration
+- [x] Protected web by basic authentication
 
 Requirements
 ---
@@ -27,6 +31,7 @@ Installation
 
    ```ruby
    my = {
+     # basic configuration
      :cf_hostname              => "my-centos-env.dev" ,
      :cf_private_ip            => "10.10.10.10"       ,
      :cf_timezone              => "UTC"               ,
@@ -35,26 +40,42 @@ Installation
      :cf_app_source_path       => "../source"         ,
      :cf_selinux_enabled       => false               ,
 
+     # configuration for nginx or httpd service
      :cf_http_port             => 80                  ,
-     :cf_http_user             => "nginx"             ,
-     :cf_http_group            => "nginx"             ,
+     :cf_http_user             => "apache"            ,
+     :cf_http_group            => "apache"            ,
      :cf_https_enabled         => false               ,
      :cf_https_port            => 443                 ,
+
+     # configuration for basic authentication
      :cf_basic_auth_enabled    => true                ,
      :cf_basic_auth_user       => "dev"               ,
      :cf_basic_auth_password   => "devpass"           ,
 
-     :cf_php_timezone          => "UTC"               ,
+     # configuration for php-fpm service
      :cf_php_fpm_listen        => "127.0.0.1:9000"    ,
-     :cf_php_fpm_user          => "nginx"             ,
-     :cf_php_fpm_group         => "nginx"             ,
 
+     # configuration for mysqld service
      :cf_mariadb_root_password => "rootpass"          ,
      :cf_mariadb_port          => 3306                ,
-     :cf_mariadb_remote_access => false               ,
+     :cf_mariadb_remote_access => true                ,
 
+     # configuration for postgresql service
+     :cf_postgresql_port          => 5432             ,
+     :cf_postgresql_remote_access => true             ,
+
+     # configuration for redis-server service
      :cf_redis_port            => 6379                ,
      :cf_redis_remote_access   => false               ,
+     #:cf_redis_password        => false               ,
+
+     # configuration for forwarded_port
+     :cf_host_port_ssh         => 20022               ,
+     :cf_host_port_http        => 20080               ,
+     :cf_host_port_https       => 20443               ,
+     :cf_host_port_mariadb     => 23306               ,
+     :cf_host_port_postgresql  => 25432               ,
+     :cf_host_port_redis       => 26379               ,
    }
    ```
 

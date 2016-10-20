@@ -1,11 +1,9 @@
 #!/usr/bin/bash
 echo ">> Install Redis"
-sudo yum install --enablerepo=remi -y -q redis >/dev/null 2>&1
+sudo yum install --enablerepo=remi -y redis
 
 # ensure it is running
 sudo systemctl start redis
-
-# set to auto start
 sudo systemctl enable redis
 
 echo ">> Configure Redis"
