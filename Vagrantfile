@@ -18,7 +18,7 @@
 my = {
   # basic configuration
   :cf_box                   => "centos/7"          , # only using centos 7 box
-  :cf_box_version           => "=1603.01"          , # set false for latest version
+  :cf_box_version           => "=1609.01"          , # set false for latest version
   :cf_hostname              => "my-centos-env.dev" ,
   :cf_private_ip            => "10.10.10.10"       ,
   :cf_timezone              => "UTC"               ,
@@ -80,6 +80,7 @@ scripts = [
   "redis.sh",
   "nodejs.sh",
   "jdk.sh",
+  "docker.sh",
 ];
 
 ################################################################################

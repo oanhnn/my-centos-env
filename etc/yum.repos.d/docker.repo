@@ -1,0 +1,6 @@
+[dockerrepo]
+name=Docker Repository
+baseurl=https://yum.dockerproject.org/repo/main/centos/7/
+gpgkey=https://yum.dockerproject.org/gpg
+gpgcheck=1
+enabled=1
