@@ -9,7 +9,7 @@ then
 fi
 
 # Install Docker
-sudo yum install docker-engine
+sudo yum install -y docker-engine
 
 # Start and enable Docker service
 sudo systemctl start docker
