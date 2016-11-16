@@ -4,7 +4,7 @@ echo ">> Install Docker"
 # copy repo file
 if [[ ! -f /etc/yum.repos.d/docker.repo ]]
 then
-    sudo cp -f /vagrant/conf/yum.repos.d/docker.repo /etc/yum.repos.d/
+    sudo cp -f /vagrant/etc/yum.repos.d/docker.repo /etc/yum.repos.d/
     sudo yum -y update
 fi
 
