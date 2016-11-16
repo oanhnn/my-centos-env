@@ -36,15 +36,18 @@ else
   sudo sed -i 's/SELINUX=\(enforcing\|permissive\)/SELINUX=disabled/g' /etc/selinux/config
 fi
 
-if [ -f /vagrant/conf/.bashrc ]
+if [[ -f /vagrant/conf/.bashrc ]]
 then
   echo ">> Load customized .bashrc file"
-  echo "source /vagrant/conf/.bashrc" >> ~/.bashrc;
+  echo "source /vagrant/conf/.bashrc" >> /home/vagrant/.bashrc;
 fi
 
-echo ">> Install 'chmodr' command"
-sudo cp -f /vagrant/bin/chmodr.sh /usr/bin/chmodr && \
-sudo chmod a+x /usr/bin/chmodr
+if [[ -f /vagrant/bin/chmodr.sh ]]
+then
+  echo ">> Install 'chmodr' command"
+  sudo cp -f /vagrant/bin/chmodr.sh /usr/bin/chmodr && \
+  sudo chmod a+x /usr/bin/chmodr
+fi
 
 echo ">> Install common packages"
 sudo yum install -y epel-release

@@ -48,6 +48,7 @@ my = {
   :cf_mariadb_remote_access => true                ,
 
   # configuration for postgresql service
+  :cf_postgresql_password      => "rootpass"       ,
   :cf_postgresql_port          => 5432             ,
   :cf_postgresql_remote_access => true             ,
 
@@ -80,6 +81,7 @@ scripts = [
   "redis.sh",
   "nodejs.sh",
   "jdk.sh",
+  "docker.sh",
 ];
 
 ################################################################################
